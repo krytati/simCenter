@@ -16,9 +16,9 @@ export type SessionItem = {
     id: InternalId,
     name: SessionType,
   }
-  groups?: Group[] | [],
-  rooms?: Room[] | [],
-  users?: User[]| [],
+  groups?: Group[],
+  rooms?: Room[],
+  users?: User[],
 }
 
 export enum SessionStatus {

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts'
-import { HeaderKeys } from '@/types/HeaderKeys.ts'
+import { HeaderKey } from '@/types/HeaderKey.ts'
 import { computed, ref, watch } from 'vue'
 
 const store = useSessionListStore();
-const Keys = computed(() =>  HeaderKeys);
+const Keys = computed(() =>  HeaderKey);
 
-const sortKey = ref<HeaderKeys|null>(null);
+const sortKey = ref<HeaderKey|null>(null);
 const sortOrder = ref(1);
 
-const sortBy = (key: HeaderKeys) => {
+const sortBy = (key: HeaderKey) => {
   if (sortKey.value === key) {
     sortOrder.value *= -1;
   } else {

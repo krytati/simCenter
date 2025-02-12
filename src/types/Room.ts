@@ -7,14 +7,14 @@ export type Room = {
   description?: string,
   is_active: boolean,
   address?: string,
-  devices?: string[] | [], //TODO
+  devices?: string[],
   responsible?: {
     id: InternalId,
     role: {
       id: InternalId,
       name: string
     },
-    groups: Group[] | [],
+    groups: Group[],
     login: string,
     name: string,
     email: string,

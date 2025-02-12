@@ -1,4 +1,4 @@
-export enum HeaderKeys {
+export enum HeaderKey {
   dateTime = 'dateTime',
   status = 'status',
   module = 'module',

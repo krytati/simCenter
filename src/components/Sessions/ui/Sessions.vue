@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import SessionList from '@/components/Sessions/ui/SessionList.vue'
-import { computed, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts'
 import Footer from '@/components/Footer/Footer.vue'
 
@@ -9,14 +9,11 @@ const store = useSessionListStore();
 const inputModule = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 20;
-const tableRef = ref<HTMLDivElement | null>(null)
+const tableRef = ref<typeof SessionList | null>(null)
 
-store.getData(1, itemsPerPage);
-
-const paginatedItems = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return store.sessions?.slice(start, start + itemsPerPage);
-});
+onMounted(() => {
+  store.getData(currentPage.value, itemsPerPage);
+})
 
 watch(inputModule, () => {
   store.filterByModule(inputModule.value);
@@ -98,7 +95,7 @@ watch(currentPage, () => {
   display: flex;
   gap: 5px;
   margin-left: auto;
-  padding: 0px 16px;
+  padding: 0 16px;
 }
 .iconButton {
   width: 30px;
@@ -135,7 +132,7 @@ watch(currentPage, () => {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 0px var(--padding-5xs) 0px var(--padding-base);
+  padding: 0 var(--padding-5xs) 0 var(--padding-base);
   gap: 10px;
   padding-left: 35px;
   background: url("@/components/icons/search.svg") no-repeat left;

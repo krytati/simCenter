@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import type {SessionItem} from "@/types/SessionItem.ts";
 import {computed, ref} from "vue";
 import {SessionService} from "@/components/Sessions/services/Session.service.ts";
-import { HeaderKeys } from '@/types/HeaderKeys.ts'
+import { HeaderKey } from '@/types/HeaderKey.ts'
 
 export const useSessionListStore = defineStore('sessionList', () => {
 
@@ -21,23 +21,23 @@ export const useSessionListStore = defineStore('sessionList', () => {
     getItems(start, itemsPerPage);
   }
 
-  const sortSessionData = (key: HeaderKeys, order: number) => {
+  const sortSessionData = (key: HeaderKey, order: number) => {
     if (!filteredSessions.value) return;
     filteredSessions.value = filteredSessions.value.sort((a,b) => {
       switch (key) {
-        case HeaderKeys.dateTime:
+        case HeaderKey.dateTime:
           return (a.start > b.start ? 1 : -1) * order;
-        case HeaderKeys.type:
+        case HeaderKey.type:
           return (a.type.id > b.type.id ? 1 : -1) * order;
-        case HeaderKeys.module:
+        case HeaderKey.module:
           return order === 1 ? a.module.localeCompare(b.module) : b.module.localeCompare(a.module);
-        case HeaderKeys.status:
+        case HeaderKey.status:
           return (a.status.id > b.status.id ? 1 : -1) * order;
-        case HeaderKeys.room:
+        case HeaderKey.room:
           const aRooms = a.rooms?.map(room => room.name).join(', ') ?? '';
           const bRooms = b.rooms?.map(room => room.name).join(', ') ?? '';
           return order === 1 ? aRooms.localeCompare(bRooms) : bRooms.localeCompare(aRooms);
-        case HeaderKeys.group:
+        case HeaderKey.group:
           const aGroups = a.groups?.map(room => room.name).join(', ') ?? '';
           const bGroups = b.groups?.map(room => room.name).join(', ') ?? '';
           return order === 1 ? aGroups.localeCompare(bGroups) : bGroups.localeCompare(aGroups);
