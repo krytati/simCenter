@@ -1,28 +1,32 @@
 <script setup lang="ts">
-import Menu from '@/components/Menu/Menu.vue'
-import { ref } from 'vue'
-import Sessions from '@/components/Sessions/ui/Sessions.vue'
+import Menu from '@/components/Menu/Menu.vue';
+import { ref } from 'vue';
+import Sessions from '@/components/Sessions/ui/Sessions.vue';
 
 const menuHidden = ref(true);
 const toggleMenu = () => {
   menuHidden.value = !menuHidden.value;
-}
+};
 </script>
 
 <template>
-  <div class='page'>
-    <div class='appBox'>
-      <Menu :menuHidden='menuHidden'/>
-      <button class="tuiAccordionItem" @click='toggleMenu'>
-        <img class="icon" :class="{ iconRotated: !menuHidden }" alt="" src="@/components/icons/Icon.svg" />
+  <div class="page">
+    <div class="appBox">
+      <Menu :menuHidden="menuHidden" />
+      <button class="tuiAccordionItem" @click="toggleMenu">
+        <img
+          class="icon"
+          :class="{ iconRotated: !menuHidden }"
+          alt=""
+          src="@/components/icons/Icon.svg"
+        />
       </button>
-      <Sessions/>
+      <Sessions />
     </div>
   </div>
 </template>
 
 <style scoped>
-
 .icon {
   width: 16px;
   position: relative;

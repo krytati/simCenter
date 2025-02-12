@@ -1,11 +1,9 @@
 <script setup lang="ts">
-
-const { menuHidden } = defineProps<{menuHidden: boolean}>();
-
+const { menuHidden } = defineProps<{ menuHidden: boolean }>();
 </script>
 
 <template>
-  <div class="menu" v-if='menuHidden'>
+  <div class="menu" v-if="menuHidden">
     <div class="navHeader">
       <div class="navHeaderInner">
         <div class="frameParent">
@@ -76,7 +74,6 @@ const { menuHidden } = defineProps<{menuHidden: boolean}>();
 </template>
 
 <style scoped>
-
 .phosphorIconsRegularCalen {
   width: 24px;
   position: relative;
@@ -272,5 +269,4 @@ const { menuHidden } = defineProps<{menuHidden: boolean}>();
 .menu.hidden {
   transform: translateX(-100%);
 }
-
 </style>

@@ -4,5 +4,5 @@ export enum HeaderKey {
   module = 'module',
   type = 'type',
   room = 'room',
-  group = 'group'
+  group = 'group',
 }

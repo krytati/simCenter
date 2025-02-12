@@ -1,19 +1,19 @@
-<script setup lang='ts'>
-import SessionList from '@/components/Sessions/ui/SessionList.vue'
-import { onMounted, ref, watch } from 'vue'
-import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts'
-import Footer from '@/components/Footer/Footer.vue'
+<script setup lang="ts">
+import SessionList from '@/components/Sessions/ui/SessionList.vue';
+import { onMounted, ref, watch } from 'vue';
+import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts';
+import Footer from '@/components/Footer/Footer.vue';
 
 const store = useSessionListStore();
 
 const inputModule = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 20;
-const tableRef = ref<typeof SessionList | null>(null)
+const tableRef = ref<typeof SessionList | null>(null);
 
 onMounted(() => {
-  store.getData(currentPage.value, itemsPerPage);
-})
+  store.getData(0, itemsPerPage);
+});
 
 watch(inputModule, () => {
   store.filterByModule(inputModule.value);
@@ -21,9 +21,9 @@ watch(inputModule, () => {
 
 watch(currentPage, () => {
   const start = (currentPage.value - 1) * itemsPerPage;
-  store.getItems(start, itemsPerPage)
+  store.getItems(start, itemsPerPage);
   tableRef.value?.scrollToTop();
-})
+});
 </script>
 
 <template>
@@ -32,7 +32,7 @@ watch(currentPage, () => {
       <div class="sessionHeaderText">Учебные сессии</div>
       <div class="buttonsBox">
         <div class="inputContainer">
-          <input class="input" placeholder='Поиск' v-model='inputModule'>
+          <input class="input" placeholder="Поиск" v-model="inputModule" />
         </div>
         <button class="iconButton">
           <img class="icon" alt="" src="@/components/icons/filter.svg" />
@@ -45,7 +45,7 @@ watch(currentPage, () => {
         </button>
       </div>
     </div>
-    <SessionList ref="tableRef"/>
+    <SessionList ref="tableRef" />
     <Footer
       :totalItems="store.sessionsCount"
       :itemsPerPage="itemsPerPage"
@@ -56,7 +56,6 @@ watch(currentPage, () => {
 </template>
 
 <style scoped>
-
 .sessionHeader {
   display: flex;
   justify-content: flex-start;
@@ -135,10 +134,8 @@ watch(currentPage, () => {
   padding: 0 var(--padding-5xs) 0 var(--padding-base);
   gap: 10px;
   padding-left: 35px;
-  background: url("@/components/icons/search.svg") no-repeat left;
+  background: url('@/components/icons/search.svg') no-repeat left;
   background-size: 17px;
   background-position: 10px;
 }
-
-
 </style>

@@ -1,4 +1,4 @@
-import { SessionStatus } from '@/types/SessionItem.ts'
+import { SessionStatus } from '@/types/SessionItem.ts';
 
 const localizedStatus: Record<string, Record<SessionStatus, string>> = {
   ru: {

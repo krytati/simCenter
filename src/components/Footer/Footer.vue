@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -46,9 +46,7 @@ const nextPage = () => {
   </div>
 </template>
 
-
 <style scoped>
-
 .icon {
   width: 15px;
   height: 15px;
@@ -90,7 +88,7 @@ button:hover:not(:disabled) {
 }
 
 button.active {
-  border: 1px solid var(--sc-base-7);;
+  border: 1px solid var(--sc-base-7);
   border-radius: var(--br-5xs);
   color: var(--sc-base-7);
 }
@@ -99,5 +97,4 @@ button:disabled {
   opacity: 0.5;
   cursor: unset;
 }
-
 </style>
