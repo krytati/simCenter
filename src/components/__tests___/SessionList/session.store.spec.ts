@@ -26,7 +26,7 @@ describe('SessionList store', () => {
     mockedSessionService.getSessions.mockResolvedValue(expectedSessions as SessionItem[]);
 
     const store = useSessionListStore();
-    await store.getData(0, 10);
+    await store.getData(10);
 
     expect(store.sessions).toMatchObject(expectedSessions);
   });
@@ -35,7 +35,7 @@ describe('SessionList store', () => {
     mockedSessionService.getSessions.mockResolvedValue(null);
 
     const store = useSessionListStore();
-    await store.getData(1, 10);
+    await store.getData(10);
 
     expect(store.sessions).toBeNull();
   });

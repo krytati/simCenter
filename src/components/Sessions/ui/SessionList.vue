@@ -16,6 +16,7 @@ const scrollToTop = () => {
 defineExpose({
   scrollToTop,
 });
+
 </script>
 
 <template>
@@ -32,6 +33,7 @@ defineExpose({
 </template>
 
 <style scoped>
+
 .tableContainer {
   width: 100%;
   overflow-x: scroll;

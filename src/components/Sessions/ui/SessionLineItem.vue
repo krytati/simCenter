@@ -20,6 +20,7 @@ const sessionTime = computed(() => {
 
 const sessionStatus = computed(() => getStatusText(session.status.name));
 const sessionType = computed(() => getTypeText(session.type.name));
+
 const sessionStatusClass = computed(() => {
   switch (session.status.name) {
     case SessionStatus.planned:
@@ -37,6 +38,7 @@ const sessionStatusClass = computed(() => {
 
 const rooms = computed(() => session.rooms?.map((room) => room.name).join(', '));
 const groups = computed(() => session.groups?.map((group) => group.name).join(', '));
+
 </script>
 
 <template>

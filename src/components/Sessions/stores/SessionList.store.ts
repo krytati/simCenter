@@ -11,13 +11,13 @@ export const useSessionListStore = defineStore('sessionList', () => {
 
   const sessionsCount = computed(() => filteredSessions.value?.length ?? 0);
 
-  const currentPage = ref(0);
+  const firstOnPageItem = ref(0);
   const itemsPerPage = ref(0);
 
-  async function getData(start: number, itemsPerPage: number) {
+  async function getData(perPage: number) {
     rawSessions.value = await SessionService.getSessions();
     filteredSessions.value = rawSessions.value;
-    getItems(start, itemsPerPage);
+    getItems(0, perPage);
   }
 
   const sortSessionData = (key: HeaderKey, order: number) => {
@@ -44,7 +44,7 @@ export const useSessionListStore = defineStore('sessionList', () => {
           return 0;
       }
     });
-    getItems(currentPage.value, itemsPerPage.value);
+    getItems(firstOnPageItem.value, itemsPerPage.value);
   };
 
   const filterByModule = (text: string) => {
@@ -52,12 +52,12 @@ export const useSessionListStore = defineStore('sessionList', () => {
     filteredSessions.value = rawSessions.value.filter((session) =>
       session.module.toLowerCase().includes(text.toLowerCase()),
     );
-    currentPage.value = 0;
-    getItems(currentPage.value, itemsPerPage.value);
+    firstOnPageItem.value = 0;
+    getItems(firstOnPageItem.value, itemsPerPage.value);
   };
 
   const getItems = (start: number, perPage: number) => {
-    currentPage.value = start;
+    firstOnPageItem.value = start;
     itemsPerPage.value = perPage;
     if (!filteredSessions.value) return null;
     sessions.value = filteredSessions.value.slice(start, start + perPage);

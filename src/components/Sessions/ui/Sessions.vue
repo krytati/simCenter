@@ -12,7 +12,7 @@ const itemsPerPage = 20;
 const tableRef = ref<typeof SessionList | null>(null);
 
 onMounted(() => {
-  store.getData(0, itemsPerPage);
+  store.getData(itemsPerPage);
 });
 
 watch(inputModule, () => {
@@ -24,6 +24,7 @@ watch(currentPage, () => {
   store.getItems(start, itemsPerPage);
   tableRef.value?.scrollToTop();
 });
+
 </script>
 
 <template>
@@ -45,6 +46,7 @@ watch(currentPage, () => {
         </button>
       </div>
     </div>
+
     <SessionList ref="tableRef" />
     <Footer
       :totalItems="store.sessionsCount"
@@ -56,6 +58,7 @@ watch(currentPage, () => {
 </template>
 
 <style scoped>
+
 .sessionHeader {
   display: flex;
   justify-content: flex-start;
@@ -96,6 +99,7 @@ watch(currentPage, () => {
   margin-left: auto;
   padding: 0 16px;
 }
+
 .iconButton {
   width: 30px;
   height: 30px;
@@ -138,4 +142,5 @@ watch(currentPage, () => {
   background-size: 17px;
   background-position: 10px;
 }
+
 </style>
