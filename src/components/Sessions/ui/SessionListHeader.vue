@@ -33,7 +33,7 @@ watch([sortKey, sortOrder], () => {
       <div class="headerCell">
         <div class="headerText">Дата и время</div>
         <div v-if="sortKey === Keys.dateTime">
-          <img class="icon" :class="{ iconUp: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
         </div>
       </div>
     </th>
@@ -42,7 +42,7 @@ watch([sortKey, sortOrder], () => {
       <div class="headerCell">
         <div class="headerText">Статус</div>
         <div v-if="sortKey === Keys.status">
-          <img class="icon" :class="{ iconUp: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
         </div>
       </div>
     </th>
@@ -51,7 +51,7 @@ watch([sortKey, sortOrder], () => {
       <div class="headerCell" @click="sortBy(Keys.module)">
         <div class="headerText">Название учебного модуля</div>
         <div v-if="sortKey === Keys.module">
-          <img class="icon" :class="{ iconUp: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
         </div>
       </div>
     </th>
@@ -60,20 +60,26 @@ watch([sortKey, sortOrder], () => {
       <div class="headerCell" @click="sortBy(Keys.type)">
         <div class="headerText">Тип сессии</div>
         <div v-if="sortKey === Keys.type">
-          <img class="icon" :class="{ iconUp: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
         </div>
       </div>
     </th>
 
     <th class="parent">
-      <div class="headerCell">
+      <div class="headerCell" @click="sortBy(Keys.room)">
         <div class="headerText">Комната</div>
+        <div v-if="sortKey === Keys.room">
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+        </div>
       </div>
     </th>
 
     <th class="parent">
-      <div class="headerCell">
+      <div class="headerCell" @click="sortBy(Keys.group)">
         <div class="headerText">Группа</div>
+        <div v-if="sortKey === Keys.group">
+          <img class="icon" :class="{ iconRevert: sortOrder === 1}" alt="" src="@/components/icons/More.svg"/>
+        </div>
       </div>
     </th>
   </tr>
@@ -88,7 +94,7 @@ watch([sortKey, sortOrder], () => {
     margin: 3px;
   }
 
-  .iconUp {
+  .iconRevert {
     transform: rotate(180deg);
   }
 

@@ -1,15 +1,32 @@
 <script setup lang='ts'>
 import SessionList from '@/components/Sessions/ui/SessionList.vue'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts'
+import Footer from '@/components/Footer/Footer.vue'
 
 const store = useSessionListStore();
 
 const inputModule = ref('');
+const currentPage = ref(1);
+const itemsPerPage = 20;
+const tableRef = ref<HTMLDivElement | null>(null)
+
+store.getData(1, itemsPerPage);
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return store.sessions?.slice(start, start + itemsPerPage);
+});
 
 watch(inputModule, () => {
   store.filterByModule(inputModule.value);
 });
+
+watch(currentPage, () => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  store.getItems(start, itemsPerPage)
+  tableRef.value?.scrollToTop();
+})
 </script>
 
 <template>
@@ -31,8 +48,13 @@ watch(inputModule, () => {
         </button>
       </div>
     </div>
-    <SessionList/>
-    <div class="sessionFooter"> это футер </div>
+    <SessionList ref="tableRef"/>
+    <Footer
+      :totalItems="store.sessionsCount"
+      :itemsPerPage="itemsPerPage"
+      :currentPage="currentPage"
+      @update:currentPage="currentPage = $event"
+    />
   </div>
 </template>
 
@@ -58,20 +80,9 @@ watch(inputModule, () => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   justify-content: space-between;
   padding: 20px;
   margin: 10px 10px 10px -10px;
-}
-
-.sessionFooter {
-  height: 30px;
-  background-color: var(--color-whitesmoke-100);
-  border-radius: 0 0 var(--br-xs) var(--br-xs);
-  text-align: center;
-  font-size: var(--body-m-size);
-  color: var(--sc-base-1);
-  font-family: var(--body-m);
 }
 
 .icon {

@@ -1,16 +1,26 @@
 <script setup lang='ts'>
-
 import { useSessionListStore } from '@/components/Sessions/stores/SessionList.store.ts'
 import SessionLineItem from '@/components/Sessions/ui/SessionLineItem.vue'
 import SessionListHeader from '@/components/Sessions/ui/SessionListHeader.vue'
+import { nextTick, ref } from 'vue'
 
 const sessionStore = useSessionListStore();
-sessionStore.getData();
+const tableContainer = ref<HTMLDivElement | null>(null);
+
+const scrollToTop = () => {
+  nextTick(() => {
+    tableContainer.value?.scrollTo(0, 0);
+  });
+}
+
+defineExpose({
+  scrollToTop,
+});
 
 </script>
 
 <template>
-  <div class='tableContainer'>
+  <div class='tableContainer' ref="tableContainer">
     <table>
       <SessionListHeader/>
       <SessionLineItem :session="session" v-for="session in sessionStore.sessions" :key="session.id"/>

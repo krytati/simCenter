@@ -7,40 +7,54 @@ import { HeaderKeys } from '@/types/HeaderKeys.ts'
 export const useSessionListStore = defineStore('sessionList', () => {
 
   const sessions = ref<SessionItem[]|null>(null);
-  let rawSessions: SessionItem[] | null;
+  const rawSessions = ref<SessionItem[]|null>(null);
+  const sessionsCount = computed(() => rawSessions.value?.length ?? 0);
 
-  const sessionsCount = computed(() => sessions.value?.length ?? 0);
+  const currentPage = ref(0);
+  const itemsPerPage = ref(0);
 
-  async function getData() {
-    sessions.value = await SessionService.getSessions();
-    if (sessions.value) {
-      rawSessions = [...sessions.value];
-    } else {
-      rawSessions = null;
-    }
+  async function getData(start: number, itemsPerPage: number) {
+    rawSessions.value = await SessionService.getSessions();
+    getItems(start, itemsPerPage);
   }
 
   const sortSessionData = (key: HeaderKeys, order: number) => {
-    if (!sessions.value) return;
-    sessions.value = sessions.value.sort((a,b) => {
+    if (!rawSessions.value) return;
+    rawSessions.value = rawSessions.value.sort((a,b) => {
       switch (key) {
         case HeaderKeys.dateTime:
           return (a.start > b.start ? 1 : -1) * order;
         case HeaderKeys.type:
           return (a.type.id > b.type.id ? 1 : -1) * order;
         case HeaderKeys.module:
-          return (a.module > b.module ? 1 : -1) * order;
+          return order === 1 ? a.module.localeCompare(b.module) : b.module.localeCompare(a.module);
         case HeaderKeys.status:
           return (a.status.id > b.status.id ? 1 : -1) * order;
+        case HeaderKeys.room:
+          const aRooms = a.rooms?.map(room => room.name).join(', ') ?? '';
+          const bRooms = b.rooms?.map(room => room.name).join(', ') ?? '';
+          return order === 1 ? aRooms.localeCompare(bRooms) : bRooms.localeCompare(aRooms);
+        case HeaderKeys.group:
+          const aGroups = a.groups?.map(room => room.name).join(', ') ?? '';
+          const bGroups = b.groups?.map(room => room.name).join(', ') ?? '';
+          return order === 1 ? aGroups.localeCompare(bGroups) : bGroups.localeCompare(aGroups);
         default:
           return 0;
       }
     })
+    getItems(currentPage.value, itemsPerPage.value);
   }
 
   const filterByModule = (text: string) => {
-    if (!rawSessions) return;
-    sessions.value = rawSessions.filter((session) => session.module.toLowerCase().includes(text.toLowerCase()));
+    if (!rawSessions.value) return;
+    sessions.value = rawSessions.value.filter((session) => session.module.toLowerCase().includes(text.toLowerCase()));
+  }
+
+  const getItems = (start: number, perPage: number) => {
+    currentPage.value = start;
+    itemsPerPage.value = perPage;
+    if (!rawSessions.value) return null;
+    sessions.value = rawSessions.value.slice(start, start + perPage);
   }
 
   return {
@@ -49,5 +63,6 @@ export const useSessionListStore = defineStore('sessionList', () => {
     getData,
     sortSessionData,
     filterByModule,
+    getItems,
   }
 })
