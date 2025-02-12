@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+body {
+    margin: 0; line-height: normal;
+}
+
+:root {
+    /* fonts */
+    --body-m: Manrope;
+    --body-s: Manrope;
+    --heading-5: Manrope;
+    --font-roboto: Roboto;
+    /* font sizes */
+    --body-m-size: 15px;
+    --body-s-size: 13px;
+    --body-l-bold-size: 17px;
+    --heading-5-size: 24px;
+    /* Colors */
+    --color-whitesmoke-100: #f5f7f9;
+    --sc-base-12: #f4f4f4;
+    --main-background-color: #f4f4f8;
+    --color-whitesmoke-200: #e8eaec;
+    --sc-base-6: #fff;
+    --sc-base-1: #2f3144;
+    --sc-base-7: #3761f3;
+    --sc-base-4: #e0e0e0;
+    --color-darkseagreen: #91c893;
+    --color-lightsteelblue: #afbff5;
+    --color-white: #fff;
+    --sc-base-2: rgba(47, 49, 68, 0.65);
+    --sc-base-11: #2b4ec5;
+    /* Gaps */
+    --gap-3xs: 10px;
+    --gap-9xs: 4px;
+    --gap-xs: 12px;
+    /* Paddings */
+    --padding-3xs: 10px;
+    --padding-base: 16px;
+    --padding-9xs: 4px;
+    --padding-xs: 12px;
+    --padding-5xs: 8px;
+    /* Border radiuses */
+    --br-xs: 12px;
+    --br-5xs: 8px;
+    --br-24xl: 43px;
+    --br-7xs: 6px;
+    --br-29xl: 48px;
+    --br-base: 16px;
+}
