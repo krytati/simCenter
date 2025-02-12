@@ -8,19 +8,22 @@ export const useSessionListStore = defineStore('sessionList', () => {
 
   const sessions = ref<SessionItem[]|null>(null);
   const rawSessions = ref<SessionItem[]|null>(null);
-  const sessionsCount = computed(() => rawSessions.value?.length ?? 0);
+  const filteredSessions = ref<SessionItem[]|null>(null);
+
+  const sessionsCount = computed(() => filteredSessions.value?.length ?? 0);
 
   const currentPage = ref(0);
   const itemsPerPage = ref(0);
 
   async function getData(start: number, itemsPerPage: number) {
     rawSessions.value = await SessionService.getSessions();
+    filteredSessions.value = rawSessions.value;
     getItems(start, itemsPerPage);
   }
 
   const sortSessionData = (key: HeaderKeys, order: number) => {
-    if (!rawSessions.value) return;
-    rawSessions.value = rawSessions.value.sort((a,b) => {
+    if (!filteredSessions.value) return;
+    filteredSessions.value = filteredSessions.value.sort((a,b) => {
       switch (key) {
         case HeaderKeys.dateTime:
           return (a.start > b.start ? 1 : -1) * order;
@@ -47,14 +50,16 @@ export const useSessionListStore = defineStore('sessionList', () => {
 
   const filterByModule = (text: string) => {
     if (!rawSessions.value) return;
-    sessions.value = rawSessions.value.filter((session) => session.module.toLowerCase().includes(text.toLowerCase()));
+    filteredSessions.value = rawSessions.value.filter((session) => session.module.toLowerCase().includes(text.toLowerCase()));
+    currentPage.value = 0;
+    getItems(currentPage.value, itemsPerPage.value);
   }
 
   const getItems = (start: number, perPage: number) => {
     currentPage.value = start;
     itemsPerPage.value = perPage;
-    if (!rawSessions.value) return null;
-    sessions.value = rawSessions.value.slice(start, start + perPage);
+    if (!filteredSessions.value) return null;
+    sessions.value = filteredSessions.value.slice(start, start + perPage);
   }
 
   return {
